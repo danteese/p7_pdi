@@ -28,6 +28,9 @@ subplot(2,2,2),imshow((abs(fftimg.^0.15)+1),[]),title('Espectro');
 subplot(2,2,3),imshow((abs(espectro.^0.15)+1),[]),title('Espectro con filtro');
 subplot(2,2,4),imshow(abs(img2),[]),title('Imagen con Filtro');
 
+disp('Parte 2');
+pause;
+
 %% Parte 3
 figure
 set(gcf, 'Name', '4 Bandas de rechazo', 'NumberTitle', 'Off');
@@ -75,7 +78,8 @@ subplot(2,2,2),imshow((abs(fftimgf.^0.15)+1),[]),title('Espectro de imagen');
 subplot(2,2,3),imshow((abs(filtroTotal.^0.15)+1),[]),title('Espectro con filtro');
 subplot(2,2,4),imshow(abs(imgf2),[]),title('Imagen filtrada');
 
-
+disp('Parte 3');
+pause;
 %% Parte 4
 % Other way to do it: http://www.cs.uregina.ca/Links/class-info/425/Lab5/index.html
 
@@ -116,6 +120,7 @@ subplot(2,2,2); imshow(log(abs(img_fftsh.^0.55)+1), []); title('Espectro');
 subplot(2,2,3); imshow(ifft2(ifftshift(removed)), []); title('Imagen con filtro');
 subplot(2,2,4); imshow(log(abs(removed.^0.55)+1), []); title('Espectro con filtro');
 
+pause;
 % Basket
 clc; clear;
 
@@ -168,5 +173,8 @@ subplot(2,2,2); imshow(log(abs(img_fftsh.^0.55)+1), []); title('Espectro');
 subplot(2,2,3); imshow(abs(ifft2(ifftshift(re))+1), []); title('Con patrones removidos');
 subplot(2,2,4); imshow(log(abs(re.^0.55)+1), []); title('Espectro con componentes removidos');
 
+disp('Parte 4');
 disp('Como se puede apreciar en los espectros se muestran deltas muy pronunciadas, que pueden ser tapadas a través de los filtros de notch.');
 disp('Lo que puede resultar algo complicado son las coordenadas y la densidad con la que se aplicaría dicho filtro.');
+pause;
+close all;
