@@ -29,35 +29,40 @@ subplot(2,2,4),imshow(abs(img2),[]),title('Imagen con Filtro');
 %% Parte 3
 figure
 set(gcf, 'Name', '4 Bandas de rechazo', 'NumberTitle', 'Off');
-fox=imread('fox.tif'); %leyendo imagen original
-fox=mat2gray(double(fox));
-foxFFT=fft2(fox); %trasnformada a frecuencia
-foxFFT=fftshift(foxFFT);
+%Lectura y transformada de la imagen 
+imgf=imread('fox.tif');
+imgf=mat2gray(double(imgf));
+fftimgf=fft2(imgf);
+fftimgf=fftshift(fftimgf);
 %Creamos los vectores para crear los filtros
 vectorX=-1:1/210:1;
 vectorY=-1:1/319.5:1;
-[xm,ym]=meshgrid(vectorY,vectorX);
-%Creacion del primer filtro
-H1=CrearFiltro(0.2, 1.3, xm, ym);
+[xv,yv]=meshgrid(vectorY,vectorX);
+%Se crean los filtros necesarios para limpiar la imagen
+%se crea del primer filtro
+H1=CrearFiltro(0.2, 1.3, xv, yv);
 filtro1 = H1;
-filtro1(421,640)= 0; %Creamos una delta en el centro
+%se crea una delta en el centro
+filtro1(421,640)= 0;
 %Creacion del filtro 2
-H2=CrearFiltro(0.18, 0.35, xm, ym);
+H2=CrearFiltro(0.18, 0.35, xv, yv);
 filtro2 = H2;
 filtro2(421,640)= 0;
 %Creacion del filtro 3
-H3=CrearFiltro(0.2, 0.75, xm, ym);
+H3=CrearFiltro(0.2, 0.75, xv, yv);
 filtro3 = H3;
 filtro3(421,640)= 0;
-filtroTotal=filtro1.*filtro2.*filtro3;%Multiplicamos los filtros para hacer uno
-filtroTotal=foxFFT.*filtroTotal; %multiplicamos en frecuencia
-nuevaFox = ifftshift(filtroTotal);
-nuevaFox=ifft2(nuevaFox);
+% Se multiplican los filtros para tener uno total
+filtroTotal=filtro1.*filtro2.*filtro3;
+%Se multiplucan las frecuencias
+filtroTotal=fftimgf.*filtroTotal; 
+imgf2 = ifftshift(filtroTotal);
+imgf2=ifft2(imgf2);
 %Ploteamos los resultados
-subplot(2,2,1),imshow(fox),title('Imagen Original');
-subplot(2,2,2),imshow((abs(foxFFT.^0.15)+1),[]),title('Espectro de imagen');
+subplot(2,2,1),imshow(imgf),title('Imagen Original');
+subplot(2,2,2),imshow((abs(fftimgf.^0.15)+1),[]),title('Espectro de imagen');
 subplot(2,2,3),imshow((abs(filtroTotal.^0.15)+1),[]),title('Espectro con filtro');
-subplot(2,2,4),imshow(abs(nuevaFox),[]),title('Imagen filtrada');
+subplot(2,2,4),imshow(abs(imgf2),[]),title('Imagen filtrada');
 %% Funciones
 %function [H]=CrearFiltro(W, Do, xm, ym)
 %    D = sqrt((xm.^2)+(ym.^2)); %Do de la formula
